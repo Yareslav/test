@@ -8,26 +8,26 @@ export const update=createAction("UPDATE");
 export const check=createAction("CHECK");
 export const remove=createAction("REMOVE")
 export default createReducer(initialState,{
-	[create]:(state,payload)=>{
+	[create]:(state,{payload})=>{
 		state.todos.push({
 			name:payload,
 			checked:false
 		});
 		insertIntoMemory(state);
 	},
-	[update]:(state,payload)=>{
+	[update]:(state,{payload})=>{
 		state.todos[payload.index].name=payload.name;
 		insertIntoMemory(state);
 	},
-	[check]:(state,payload)=>{
+	[check]:(state,{payload})=>{
 		state.todos[payload].checked=!state.todos[payload].checked;
 		insertIntoMemory(state);
 	},
-	[remove]:(state,payload)=>{
+	[remove]:(state,{payload})=>{
 		state.todos.splice(payload,1);
 		insertIntoMemory(state);
 	},
 })
-function insertIntoMemory(data) {
-	localStorage.setItem("data",JSON.stringify(data));
+function insertIntoMemory({todos}) {
+	localStorage.setItem("data",JSON.stringify(todos));
 }
